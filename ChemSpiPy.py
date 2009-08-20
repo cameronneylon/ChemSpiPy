@@ -89,7 +89,7 @@ def simplesearch(query):
     simply returns a single object of the type ChemSpiderID
     """
 
-    assert type(query) == str, 'query not a string object'
+    assert type(query) == str or type(query) == unicode, 'query not a string object'
 
     baseurl = 'http://www.chemspider.com/'
     token  = '3a19d00d-874f-4879-adc0-3013dbecbbc9'
