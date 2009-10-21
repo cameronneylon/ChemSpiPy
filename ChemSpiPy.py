@@ -78,31 +78,34 @@ class ChemSpiderId(str):
             self.molwt = molecularweight
             return molecularweight
 
-    def mol(self):
+    def molfile(self):
         """Poll the ChemSpider MS API for the mol descriptor for a specific Chemspider ID."""
 
         assert self != '', 'ChemSpiderID not initialised with value'
 
-        if self.mol == '':
+        if self.molfile == '':
             baseurl = 'http://www.chemspider.com/'
             token  = '3a19d00d-874f-4879-adc0-3013dbecbbc9'
 
             # Construct a search URL and poll Chemspider for the XML result
-            searchurl = baseurl + 'MassSpecAPI.asmx/GetRecordMol?CSID=' + self.id + 'calc3d=true&token=' + token
+            searchurl = baseurl + 'MassSpecAPI.asmx/GetRecordMol?csid=' + self.id + '&calc3d=true&token=' + token
 
             response = urllib.urlopen(searchurl)
-
-            tree = ET.parse(response) #parse the CS XML response
+        
+            tree = ET.parse(response) #Parse the CS XML response
             elem = tree.getroot()
             mol_tags = elem.getiterator('{http://www.chemspider.com/}string')
 
-            molist = []
+            tagslist = []
             for tags in mol_tags:
-                molist.append(tags.text)
+                tagslist.append(tags.text)
 
-            moldescriptor = molist[0]
-            self.mol = moldescriptor
-            return moldescriptor           
+            molfile = tagslist[0]
+            self.molfile = molfile
+            return molfile 
+
+        else:
+            return self.molfile
 
 
 def simplesearch(query):
