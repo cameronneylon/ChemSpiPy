@@ -89,7 +89,7 @@ class ChemSpiderId(str):
         
             tree = ET.parse(response) #Parse the CS XML response
             moltag = tree.find('{http://www.chemspider.com/}string')
-            molfiletext = moltag.text
+            molfiletext = string(moltag.text)
 
             self.molfile = molfiletext
             return molfiletext 
