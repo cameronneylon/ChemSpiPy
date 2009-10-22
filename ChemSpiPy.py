@@ -73,7 +73,7 @@ class ChemSpiderId(str):
             self.molwt = molecularweight
             return molecularweight
 
-    def molfile(self):
+    def getMolFile(self):
         """Poll the ChemSpider MS API for the mol descriptor for a specific Chemspider ID."""
 
         assert self != '', 'ChemSpiderID not initialised with value'
@@ -89,7 +89,7 @@ class ChemSpiderId(str):
         
             tree = ET.parse(response) #Parse the CS XML response
             moltag = tree.find('{http://www.chemspider.com/}string')
-            molfiletext = string(moltag.text)
+            molfiletext = moltag.text
 
             self.molfile = molfiletext
             return molfiletext 
