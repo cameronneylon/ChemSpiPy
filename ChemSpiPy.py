@@ -1,5 +1,5 @@
 import urllib
-from xml.etree import cElementTree as ET
+from xml.etree import ElementTree as ET
 import unittest
 
 
@@ -78,24 +78,24 @@ class ChemSpiderId(str):
 
         assert self != '', 'ChemSpiderID not initialised with value'
 
-        if self.molfile == '':
-            baseurl = 'http://www.chemspider.com/'
-            token  = '3a19d00d-874f-4879-adc0-3013dbecbbc9'
+        #if self.molfile == None:
+        baseurl = 'http://www.chemspider.com/'
+        token  = '3a19d00d-874f-4879-adc0-3013dbecbbc9'
 
             # Construct a search URL and poll Chemspider for the XML result
-            searchurl = baseurl + 'MassSpecAPI.asmx/GetRecordMol?csid=' + self.id + '&calc3d=true&token=' + token
+        searchurl = baseurl + 'MassSpecAPI.asmx/GetRecordMol?csid=' + self.id + '&calc3d=true&token=' + token
 
-            response = urllib.urlopen(searchurl)
+        response = urllib.urlopen(searchurl)
         
-            tree = ET.parse(response) #Parse the CS XML response
-            moltag = tree.find('{http://www.chemspider.com/}string')
-            molfiletext = moltag.text
+        tree = ET.parse(response) #Parse the CS XML response
+        moltag = tree.find('{http://www.chemspider.com/}string')
+        molfiletext = moltag.text
 
-            self.molfile = molfiletext
-            return molfiletext 
+        self.molfile = molfiletext
+        return molfiletext 
 
-        else:
-            return self.molfile
+        #else:
+         #   return self.molfile
 
 
 def simplesearch(query):
