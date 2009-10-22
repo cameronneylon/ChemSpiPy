@@ -88,7 +88,7 @@ class ChemSpiderId(str):
         response = urllib.urlopen(searchurl)
         
         tree = ET.parse(response) #Parse the CS XML response
-        moltag = tree.find('{http://www.chemspider.com/}string')
+        moltag = tree.getroot()
         molfiletext = moltag.text
 
         self.molfile = molfiletext
