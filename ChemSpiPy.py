@@ -67,14 +67,9 @@ class ChemSpiderId(str):
             response = urllib.urlopen(searchurl)
 
             tree = ET.parse(response) #parse the CS XML response
-            elem = tree.getroot()
-            csmolwt_tags = elem.getiterator('{http://www.chemspider.com/}MolecularWeight')
+            molwttag = tree.find('{http://www.chemspider.com/}MolecularWeight')
+            molecularweight = float(molwttag.text)
 
-            molwtlist = []
-            for tags in csmolwt_tags:
-                molwtlist.append(tags.text)
-
-            molecularweight = float(molwtlist[0])
             self.molwt = molecularweight
             return molecularweight
 
@@ -94,10 +89,10 @@ class ChemSpiderId(str):
         
             tree = ET.parse(response) #Parse the CS XML response
             moltag = tree.find('{http://www.chemspider.com/}string')
-            molfile = moltag.text
+            molfiletext = moltag.text
 
-            self.molfile = molfile
-            return molfile 
+            self.molfile = molfiletext
+            return molfiletext 
 
         else:
             return self.molfile
